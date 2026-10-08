@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Alex Sharma | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating decorative floral petals -->
+  <div class="petal-decor petal-1" aria-hidden="true">🌸</div>
+  <div class="petal-decor petal-2" aria-hidden="true">🌸</div>
+  <div class="petal-decor petal-3" aria-hidden="true">🌸</div>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Alex<span class="logo-flower">🌸</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="hero-eyebrow">🌸 What I've Built</span>
+      <h1>Featured Projects</h1>
+      <p class="page-hero-sub">A collection of machine learning experiments, computer vision models, and full-stack software.</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="projects-full">
+
+        <!-- Project 1: Sentiment Analyser -->
+        <div class="project-full-card">
+          <div class="pf-grid">
+            <div class="pf-media">
+              <img src="images/project-sentiment.jpg" alt="Sentify AI Sentiment Analyser Dashboard Interface" class="pf-image" loading="lazy" />
+            </div>
+            <div class="pf-details">
+              <div class="pf-header">
+                <div>
+                  <span class="project-tag">Machine Learning &amp; NLP</span>
+                  <h2>Sentiment Analyser</h2>
+                </div>
+                <div class="pf-links">
+                  <a href="#" class="btn-ghost-sm">GitHub ↗</a>
+                  <a href="#" class="btn-primary-sm">Live Demo 🌸</a>
+                </div>
+              </div>
+              <p>An NLP model trained on a curated corpus of 50,000 tweets to classify sentiment polarity as positive, negative, or neutral. I fine-tuned a BERT-base architecture using Hugging Face Transformers, achieving 87% test accuracy.</p>
+              <p>The workflow covers comprehensive text normalization, subword tokenization, class rebalancing with SMOTE, and an interactive Flask API endpoint with visual metric reporting.</p>
+              <div class="pf-stack">
+                <span>Python</span><span>PyTorch</span><span>Hugging Face</span><span>Flask</span><span>Pandas</span><span>Scikit-Learn</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Handwriting OCR -->
+        <div class="project-full-card">
+          <div class="pf-grid reverse">
+            <div class="pf-media">
+              <img src="images/project-ocr.jpg" alt="ScribeAI Handwriting OCR CNN Interface" class="pf-image" loading="lazy" />
+            </div>
+            <div class="pf-details">
+              <div class="pf-header">
+                <div>
+                  <span class="project-tag">Computer Vision</span>
+                  <h2>Handwriting OCR</h2>
+                </div>
+                <div class="pf-links">
+                  <a href="#" class="btn-ghost-sm">GitHub ↗</a>
+                  <a href="#" class="btn-primary-sm">Live Demo 🌸</a>
+                </div>
+              </div>
+              <p>A deep convolutional neural network that segments and transcribes scanned handwritten notes into cleanly structured digital text. Trained on the IAM Handwriting Database, it reaches 92% character-level recognition fidelity.</p>
+              <p>Addressed complex preprocessing challenges using adaptive Gaussian thresholding, custom spatial image augmentations, and an n-gram language model post-processor for error correction.</p>
+              <div class="pf-stack">
+                <span>Python</span><span>TensorFlow</span><span>OpenCV</span><span>NumPy</span><span>Matplotlib</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Study Planner App -->
+        <div class="project-full-card">
+          <div class="pf-grid">
+            <div class="pf-media">
+              <img src="images/project-planner.jpg" alt="Aura Study Planner Application Interface" class="pf-image" loading="lazy" />
+            </div>
+            <div class="pf-details">
+              <div class="pf-header">
+                <div>
+                  <span class="project-tag">Full-Stack Web Dev</span>
+                  <h2>Study Planner App</h2>
+                </div>
+                <div class="pf-links">
+                  <a href="#" class="btn-ghost-sm">GitHub ↗</a>
+                  <a href="#" class="btn-primary-sm">Live Demo 🌸</a>
+                </div>
+              </div>
+              <p>A web productivity tool tailored for college students to strategically pace study intervals. Includes an intelligent scheduler calculating study sessions based on syllabus size, exam countdowns, and self-reported difficulty coefficients.</p>
+              <p>Engineered with a lightweight Python Flask service, responsive glassmorphism UI in vanilla JavaScript and CSS, with SQLite transactional persistence.</p>
+              <div class="pf-stack">
+                <span>Flask</span><span>JavaScript</span><span>SQLite</span><span>HTML5</span><span>CSS3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="project-full-card coming-soon">
+          <div class="coming-soon-icon">🌸</div>
+          <h3>More Research &amp; Builds in Progress</h3>
+          <p>Currently researching deep reinforcement learning for robotics simulation and building an automated paper summarizer. Follow along or reach out if you'd like to collaborate!</p>
+          <a href="contact.html" class="btn-primary" style="margin-top:1.25rem;">Get in Touch 🌸</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Alex<span class="logo-flower">🌸</span></a>
+      <p class="footer-copy">© 2026 Alex Sharma. Crafted with pale pink &amp; floral aesthetics.</p>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

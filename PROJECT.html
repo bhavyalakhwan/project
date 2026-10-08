@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bhavya Lakhwan — CS Student Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Bhavya<span>.</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">BTech CS (AI) · First Year</p>
+      <h1 class="hero-title">Building logic<br>and learning code<br><span class="accent">from the ground up.</span></h1>
+      <p class="hero-sub">I'm Bhavya Lakhwan — a first-year Computer Science student. I'm building strong foundations in C programming, problem solving, and modern web development.</p>
+      <div class="hero-cta">
+        <a href="projects.html" class="btn-primary">View Projects</a>
+        <a href="contact.html" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="grid-bg"></div>
+      <div class="glow-orb"></div>
+    </div>
+  </section>
+
+  <!-- SKILLS STRIP -->
+  <section class="skills-strip">
+    <div class="container">
+      <p class="strip-label">Skills &amp; Tools</p>
+      <div class="skills-list">
+        <span>C Programming</span>
+        <span>Functions &amp; Loops</span>
+        <span>Logic Building</span>
+        <span>Problem Solving</span>
+        <span>HTML5</span>
+        <span>CSS3</span>
+        <span>VS Code</span>
+        <span>Git Basics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Selected Work</h2>
+      <div class="projects-grid">
+        <a href="projects.html" class="project-card">
+          <div class="project-tag">C Programming</div>
+          <h3>Number &amp; Prime Analyzer</h3>
+          <p>A modular console program in C that analyzes numbers to check prime status, compute factorials, and generate mathematical sequences using iterative loops and custom functions.</p>
+          <span class="card-link">View project →</span>
+        </a>
+        <a href="projects.html" class="project-card">
+          <div class="project-tag">Web Development</div>
+          <h3>Personal Portfolio Website</h3>
+          <p>A clean, responsive multi-page portfolio built with semantic HTML5 and custom modern CSS with a sleek pink dark-mode aesthetic and mobile navigation.</p>
+          <span class="card-link">View project →</span>
+        </a>
+        <a href="projects.html" class="project-card">
+          <div class="project-tag">C Console App</div>
+          <h3>Student Marksheet &amp; Grade Calculator</h3>
+          <p>A terminal-based C application that accepts student marks, validates inputs, and calculates total percentages and grades using modular functions and conditional logic.</p>
+          <span class="card-link">View project →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SNIPPET -->
+  <section class="section about-strip">
+    <div class="container about-strip-inner">
+      <div class="about-strip-text">
+        <h2 class="section-title">A bit about me</h2>
+        <p>Currently in my first year of BTech CS (AI). I am passionate about learning core computer science fundamentals and developing strong problem-solving skills. Right now, I'm focusing on C programming, modular functions, and web technologies while exploring how software works from the ground up.</p>
+        <a href="about.html" class="btn-primary" style="margin-top:1.5rem;display:inline-block;">Read More</a>
+      </div>
+      <div class="about-strip-stats">
+        <div class="stat"><span class="stat-num">1st</span><span class="stat-label">Year Underway</span></div>
+        <div class="stat"><span class="stat-num">3+</span><span class="stat-label">Projects Built</span></div>
+        <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Problems Solved</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Bhavya<span>.</span></a>
+      <p class="footer-copy">© 2026 Bhavya Lakhwan. Built with HTML &amp; CSS.</p>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

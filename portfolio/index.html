@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Sharma — AI &amp; CS Student Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating decorative floral petals -->
+  <div class="petal-decor petal-1" aria-hidden="true">🌸</div>
+  <div class="petal-decor petal-2" aria-hidden="true">🌸</div>
+  <div class="petal-decor petal-3" aria-hidden="true">🌸</div>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Alex<span class="logo-flower">🌸</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="hero-eyebrow">
+            <span class="flower-icon">🌸</span> BTech CS (AI) · First Year
+          </span>
+          <h1 class="hero-title">Building things<br>at the edge of<br><span class="accent">intelligence.</span></h1>
+          <p class="hero-sub">I'm Alex Sharma — a computer science student specialising in artificial intelligence. I build thoughtful projects that explore what machines can learn, predict, and solve.</p>
+          <div class="hero-cta">
+            <a href="projects.html" class="btn-primary">View Projects 🌸</a>
+            <a href="contact.html" class="btn-ghost">Get in Touch</a>
+          </div>
+          <div class="hero-status">
+            <span class="hero-status-item"><span style="color:var(--accent);">●</span> Open to internships</span>
+            <span class="hero-status-item"><span style="color:var(--accent);">📍</span> Based in India</span>
+          </div>
+        </div>
+
+        <div class="hero-visual-card">
+          <div class="hero-avatar-wrapper">
+            <div class="hero-avatar-bg-glow" aria-hidden="true"></div>
+            <div class="hero-avatar-card">
+              <img src="images/profile-alex.jpg" alt="Alex Sharma - Computer Science Student" class="hero-avatar-img" />
+              <div class="hero-avatar-caption">
+                <div>
+                  <div class="hero-avatar-name">Alex Sharma</div>
+                  <div class="hero-avatar-role">BTech CS (AI) Student</div>
+                </div>
+                <span class="hero-badge-pill">🌸 2026</span>
+              </div>
+            </div>
+            <div class="hero-floating-badge">
+              <span class="hfb-icon">✨</span>
+              <div class="hfb-text">
+                <strong>AI &amp; Machine Learning</strong>
+                <span>Passionate Student &amp; Builder</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS STRIP -->
+  <section class="skills-strip">
+    <div class="container">
+      <div class="skills-strip-inner">
+        <p class="strip-label"><span>🌸</span> Skills &amp; Tools</p>
+        <div class="skills-list">
+          <span>Python</span>
+          <span>Machine Learning</span>
+          <span>TensorFlow</span>
+          <span>PyTorch</span>
+          <span>Data Structures</span>
+          <span>JavaScript</span>
+          <span>SQL</span>
+          <span>Git</span>
+          <span>Linux</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">🌸 Portfolio Showcase</span>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+      <div class="projects-grid">
+        <a href="projects.html" class="project-card">
+          <div class="project-card-media">
+            <img src="images/project-sentiment.jpg" alt="Sentiment Analyser NLP project" class="project-card-img" loading="lazy" />
+            <span class="project-tag">Machine Learning</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Sentiment Analyser</h3>
+            <p>NLP model trained on 50k tweets to classify sentiment with 87% accuracy using a fine-tuned BERT architecture.</p>
+            <span class="card-link">View project details →</span>
+          </div>
+        </a>
+
+        <a href="projects.html" class="project-card">
+          <div class="project-card-media">
+            <img src="images/project-ocr.jpg" alt="Handwriting OCR Computer Vision project" class="project-card-img" loading="lazy" />
+            <span class="project-tag">Computer Vision</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Handwriting OCR</h3>
+            <p>CNN-based model that converts handwritten notes to digital text, achieving 92% character recognition accuracy.</p>
+            <span class="card-link">View project details →</span>
+          </div>
+        </a>
+
+        <a href="projects.html" class="project-card">
+          <div class="project-card-media">
+            <img src="images/project-planner.jpg" alt="Study Planner Application" class="project-card-img" loading="lazy" />
+            <span class="project-tag">Web Dev</span>
+          </div>
+          <div class="project-card-body">
+            <h3>Study Planner App</h3>
+            <p>A full-stack web application for students to organise study sessions with smart scheduling suggestions.</p>
+            <span class="card-link">View project details →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SNIPPET -->
+  <section class="section about-strip">
+    <div class="container about-strip-inner">
+      <div class="about-strip-text">
+        <span class="section-tag">🌸 About Alex</span>
+        <h2 class="section-title">A bit about me</h2>
+        <p>Currently in my first semester of BTech CS (AI), I'm fascinated by how learning algorithms mirror and diverge from human cognition. Outside lectures I build small projects, read AI research papers, and explore creative software design.</p>
+        <a href="about.html" class="btn-primary" style="margin-top:1.25rem;">Read More About Me →</a>
+      </div>
+      <div class="about-strip-stats">
+        <div class="stat-card">
+          <span class="stat-num">3+</span>
+          <span class="stat-label">Projects built</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">8+</span>
+          <span class="stat-label">Technologies learned</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">1st</span>
+          <span class="stat-label">Semester underway</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="logo">Alex<span class="logo-flower">🌸</span></a>
+      <p class="footer-copy">© 2026 Alex Sharma. Crafted with pale pink &amp; floral aesthetics.</p>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
