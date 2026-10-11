@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NeuroGarden — A Growing Garden of Knowledge</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil:     #1a1f12;
+    --bark:     #2b3320;
+    --moss:     #3d4f2a;
+    --leaf:     #6a8f3e;
+    --sprout:   #9ec95a;
+    --blossom:  #c8e87b;
+    --petal:    #e8f5c2;
+    --mist:     #f4fae8;
+    --bloom:    #b5d96e;
+    --flower:   #d4a843;
+    --sky:      #c6e3a8;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--soil);
+    color: var(--petal);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(26,31,18,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(106,143,62,0.2);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--blossom);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--sprout); font-style: italic; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--sky);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blossom); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 3rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated garden background */
+  .garden-bg {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .garden-bg svg { width: 100%; height: 100%; }
+
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--sprout);
+    margin-bottom: 1.2rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid rgba(158,201,90,0.35);
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.08;
+    color: var(--mist);
+    margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--blossom);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--sky);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--leaf);
+    color: var(--mist);
+    text-decoration: none;
+    padding: 0.75rem 1.8rem;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--sprout); color: var(--soil); transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-block;
+    border: 1px solid rgba(158,201,90,0.4);
+    color: var(--sprout);
+    text-decoration: none;
+    padding: 0.75rem 1.8rem;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--blossom); color: var(--blossom); }
+
+  /* plant of the week badge */
+  .potw {
+    position: absolute; right: 4rem; top: 50%;
+    transform: translateY(-50%);
+    background: var(--bark);
+    border: 1px solid rgba(106,143,62,0.3);
+    border-radius: 12px;
+    padding: 1.6rem;
+    width: 240px;
+    z-index: 2;
+  }
+  .potw-label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--flower);
+    margin-bottom: 0.6rem;
+  }
+  .potw-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--mist);
+    margin-bottom: 0.5rem;
+  }
+  .potw-desc {
+    font-size: 0.8rem; color: var(--sky); line-height: 1.6;
+  }
+  .potw-emoji { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 5rem 3rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--leaf);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--mist);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .section-intro {
+    color: var(--sky);
+    max-width: 540px;
+    margin-bottom: 3rem;
+    font-size: 0.95rem;
+  }
+
+  /* ── GARDEN SECTIONS ── */
+  .garden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .garden-card {
+    background: var(--bark);
+    border: 1px solid rgba(106,143,62,0.18);
+    border-radius: 8px;
+    padding: 2rem 1.6rem;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .garden-card:hover {
+    border-color: rgba(158,201,90,0.45);
+    transform: translateY(-4px);
+  }
+  .garden-card .icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .garden-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--blossom);
+    margin-bottom: 0.5rem;
+  }
+  .garden-card p {
+    font-size: 0.82rem;
+    color: var(--sky);
+    line-height: 1.65;
+  }
+
+  /* ── WEEKLY BRAINBYTES ── */
+  .braingarden { background: var(--bark); border-radius: 12px; }
+  .weeks-list {
+    display: flex; flex-direction: column; gap: 1px;
+    border: 1px solid rgba(106,143,62,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .week-row {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 1.2rem 1.6rem;
+    background: var(--soil);
+    transition: background 0.15s;
+  }
+  .week-row:hover { background: var(--bark); }
+  .week-num {
+    font-size: 0.72rem; font-weight: 500;
+    color: var(--leaf);
+    letter-spacing: 0.08em;
+    min-width: 44px;
+  }
+  .week-emoji { font-size: 1.3rem; min-width: 30px; }
+  .week-topic {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--petal);
+    flex: 1;
+  }
+  .week-status {
+    font-size: 0.72rem; padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .status-live { background: rgba(106,143,62,0.25); color: var(--sprout); }
+  .status-soon { background: rgba(43,51,32,0.8); color: var(--leaf); border: 1px solid rgba(106,143,62,0.2); }
+
+  /* ── FACT STRIP ── */
+  .fact-strip {
+    background: var(--moss);
+    padding: 3rem;
+    text-align: center;
+  }
+  .fact-strip blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    color: var(--blossom);
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    line-height: 1.5;
+  }
+  .fact-strip cite {
+    font-size: 0.8rem;
+    color: var(--sky);
+    font-style: normal;
+  }
+
+  /* ── QUIZ ZONE ── */
+  .quiz-card {
+    background: var(--bark);
+    border: 1px solid rgba(106,143,62,0.2);
+    border-radius: 8px;
+    padding: 2.5rem;
+    max-width: 560px;
+  }
+  .quiz-question {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--mist);
+    margin-bottom: 1.5rem;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+  .quiz-option {
+    background: var(--soil);
+    border: 1px solid rgba(106,143,62,0.2);
+    border-radius: 6px;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.88rem;
+    color: var(--petal);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+  .quiz-option:hover {
+    border-color: var(--sprout);
+    background: rgba(106,143,62,0.1);
+  }
+  .quiz-option.correct { border-color: var(--sprout); background: rgba(106,143,62,0.18); }
+  .quiz-option.wrong { border-color: #c0392b; background: rgba(192,57,43,0.12); }
+  #quiz-result {
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    min-height: 1.2rem;
+    color: var(--blossom);
+  }
+
+  /* ── ABOUT / FOOTER ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-text p { color: var(--sky); font-size: 0.93rem; margin-bottom: 1rem; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stat-box {
+    background: var(--bark);
+    border: 1px solid rgba(106,143,62,0.2);
+    border-radius: 8px;
+    padding: 1.4rem;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--blossom);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--sky); margin-top: 0.2rem; }
+
+  footer {
+    border-top: 1px solid rgba(106,143,62,0.15);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: var(--leaf);
+  }
+  footer a { color: var(--leaf); text-decoration: none; }
+  footer a:hover { color: var(--sprout); }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 3.5rem 1.5rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .potw { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">Neuro<span>Garden</span></a>
+  <ul class="nav-links">
+    <li><a href="#garden">Garden</a></li>
+    <li><a href="#brainbytes">BrainBytes</a></li>
+    <li><a href="#quiz">Quiz Zone</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <!-- Animated SVG garden -->
+  <div class="garden-bg" aria-hidden="true">
+    <svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ground -->
+      <rect x="0" y="780" width="1400" height="120" fill="#2b3320" opacity="0.5"/>
+      <!-- Stems + leaves — subtle, low in frame -->
+      <g opacity="0.22">
+        <!-- Plant 1 -->
+        <line x1="120" y1="780" x2="130" y2="600" stroke="#6a8f3e" stroke-width="3"/>
+        <ellipse cx="100" cy="630" rx="40" ry="18" fill="#6a8f3e" transform="rotate(-30 100 630)"/>
+        <ellipse cx="155" cy="650" rx="35" ry="16" fill="#3d4f2a" transform="rotate(25 155 650)"/>
+        <circle cx="130" cy="590" r="22" fill="#9ec95a"/>
+        <!-- Plant 2 -->
+        <line x1="300" y1="780" x2="308" y2="670" stroke="#6a8f3e" stroke-width="2.5"/>
+        <ellipse cx="280" cy="700" rx="35" ry="15" fill="#6a8f3e" transform="rotate(-20 280 700)"/>
+        <circle cx="308" cy="660" r="16" fill="#c8e87b"/>
+        <!-- Plant 3 big tree right -->
+        <line x1="1250" y1="780" x2="1240" y2="520" stroke="#3d4f2a" stroke-width="8"/>
+        <ellipse cx="1200" cy="570" rx="80" ry="38" fill="#3d4f2a" transform="rotate(-15)"/>
+        <ellipse cx="1270" cy="540" rx="90" ry="50" fill="#2b3320"/>
+        <ellipse cx="1240" cy="510" rx="70" ry="55" fill="#3d4f2a"/>
+        <!-- Plant 4 -->
+        <line x1="900" y1="780" x2="910" y2="700" stroke="#6a8f3e" stroke-width="2"/>
+        <circle cx="910" cy="692" r="20" fill="#6a8f3e" opacity="0.8"/>
+        <circle cx="898" cy="704" r="14" fill="#9ec95a" opacity="0.6"/>
+        <!-- Floating neuron dots -->
+        <circle cx="600" cy="200" r="4" fill="#9ec95a" opacity="0.5"/>
+        <circle cx="700" cy="150" r="3" fill="#c8e87b" opacity="0.4"/>
+        <circle cx="800" cy="220" r="5" fill="#6a8f3e" opacity="0.35"/>
+        <circle cx="650" cy="310" r="3" fill="#9ec95a" opacity="0.45"/>
+        <!-- Synapse lines -->
+        <line x1="600" y1="200" x2="700" y2="150" stroke="#9ec95a" stroke-width="0.8" opacity="0.3"/>
+        <line x1="700" y1="150" x2="800" y2="220" stroke="#9ec95a" stroke-width="0.8" opacity="0.3"/>
+        <line x1="800" y1="220" x2="650" y2="310" stroke="#9ec95a" stroke-width="0.8" opacity="0.3"/>
+        <line x1="650" y1="310" x2="600" y2="200" stroke="#9ec95a" stroke-width="0.8" opacity="0.3"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <span class="eyebrow">Neuroscience · AI · Knowledge</span>
+    <h1>Where the brain<br><em>blooms.</em></h1>
+    <p class="hero-sub">
+      NeuroGarden is a growing collection of neuroscience and AI concepts — one new plant added each week. Start with a seedling, watch it grow into a tree.
+    </p>
+    <div class="hero-cta">
+      <a href="#garden" class="btn-primary">Enter the Garden</a>
+      <a href="#brainbytes" class="btn-ghost">This Week's BrainByte</a>
+    </div>
+  </div>
+
+  <!-- Plant of the Week -->
+  <div class="potw" aria-label="Plant of the Week">
+    <span class="potw-emoji">🌱</span>
+    <div class="potw-label">Plant of the Week</div>
+    <div class="potw-title">The Neuron</div>
+    <div class="potw-desc">The basic unit of the nervous system — 86 billion of them wiring every thought you've ever had.</div>
+  </div>
+</section>
+
+<!-- GARDEN SECTIONS -->
+<section id="garden">
+  <div class="section-label">The Garden</div>
+  <h2>Explore the sections</h2>
+  <p class="section-intro">Each bed grows a different aspect of the brain and mind. Click any section to begin exploring.</p>
+  <div class="garden-grid">
+    <div class="garden-card">
+      <span class="icon">🌱</span>
+      <h3>Neuron Nursery</h3>
+      <p>The fundamentals — what neurons are, how they fire, and why they matter for everything from reflex to reasoning.</p>
+    </div>
+    <div class="garden-card">
+      <span class="icon">🌿</span>
+      <h3>Memory Meadow</h3>
+      <p>How short-term memory becomes long-term, what sleep does to consolidate learning, and why some things stick.</p>
+    </div>
+    <div class="garden-card">
+      <span class="icon">🌸</span>
+      <h3>Emotion Orchard</h3>
+      <p>The limbic system, amygdala, dopamine loops — the chemistry and biology behind how we feel and why.</p>
+    </div>
+    <div class="garden-card">
+      <span class="icon">🌳</span>
+      <h3>Cognition Trees</h3>
+      <p>Higher-order thinking, decision-making, attention, and the prefrontal cortex that makes humans distinctly human.</p>
+    </div>
+    <div class="garden-card">
+      <span class="icon">🤖</span>
+      <h3>AI Greenhouse</h3>
+      <p>Where biology meets computation — neural networks, transformer models, and the neuroscience ideas that inspired AI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRAIN FACT STRIP -->
+<div class="fact-strip">
+  <blockquote>"The human brain can hold approximately 2.5 petabytes of information — the equivalent of 3 million hours of TV."</blockquote>
+  <cite>— Neuroscience fact · Week 1</cite>
+</div>
+
+<!-- BRAINBYTES WEEKLY -->
+<section id="brainbytes">
+  <div class="section-label">BrainBytes Weekly</div>
+  <h2>One concept, every week</h2>
+  <p class="section-intro">Each week a new concept is planted in the garden. Follow the sequence or jump to any topic.</p>
+  <div class="weeks-list">
+    <div class="week-row">
+      <span class="week-num">Week 1</span>
+      <span class="week-emoji">🌱</span>
+      <span class="week-topic">What is a Neuron?</span>
+      <span class="week-status status-live">Live</span>
+    </div>
+    <div class="week-row">
+      <span class="week-num">Week 2</span>
+      <span class="week-emoji">🌿</span>
+      <span class="week-topic">Synapses & Signal Transmission</span>
+      <span class="week-status status-soon">Coming soon</span>
+    </div>
+    <div class="week-row">
+      <span class="week-num">Week 3</span>
+      <span class="week-emoji">🌸</span>
+      <span class="week-topic">How Memory is Formed</span>
+      <span class="week-status status-soon">Coming soon</span>
+    </div>
+    <div class="week-row">
+      <span class="week-num">Week 4</span>
+      <span class="week-emoji">🤖</span>
+      <span class="week-topic">Neural Networks — Brain vs. Machine</span>
+      <span class="week-status status-soon">Coming soon</span>
+    </div>
+    <div class="week-row">
+      <span class="week-num">Week 5</span>
+      <span class="week-emoji">🌳</span>
+      <span class="week-topic">Brain-Computer Interfaces</span>
+      <span class="week-status status-soon">Coming soon</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ ZONE -->
+<section id="quiz" style="background: var(--bark); border-radius: 12px; margin: 0 3rem 5rem;">
+  <div class="section-label">Quiz Zone</div>
+  <h2>Test what you've grown</h2>
+  <p class="section-intro">A new quiz each week to check your roots. Week 1 — The Neuron.</p>
+  <div class="quiz-card">
+    <div class="quiz-question">What is the primary function of a neuron's axon?</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="checkAnswer(this, false)">Receive incoming signals from other neurons</button>
+      <button class="quiz-option" onclick="checkAnswer(this, true)">Transmit electrical signals away from the cell body</button>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">Produce energy for the neuron</button>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">Store neurotransmitters for long-term memory</button>
+    </div>
+    <div id="quiz-result"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background: var(--soil);">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label">About this garden</div>
+      <h2>Why NeuroGarden?</h2>
+      <p>I'm Bhavya Lakhwan — a first-year BTech CS (AI) student fascinated by the overlap between how the brain works and how we teach machines to think.</p>
+      <p>NeuroGarden is my ongoing project: a website that grows over time. The garden represents accumulating knowledge, and each new concept added is a new plant taking root.</p>
+      <p>Every week I research, simplify, and plant a new neuroscience or AI idea here — turning it into something visual, readable, and a little surprising.</p>
+      <a href="https://bhavyalakhwan.github.io/project/" class="btn-ghost" style="display:inline-block; margin-top: 1rem;">Back to Portfolio</a>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">1</div>
+        <div class="stat-label">BrainByte live</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Garden sections</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Room to grow</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">🧠</div>
+        <div class="stat-label">86B neurons to explore</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Bhavya Lakhwan · NeuroGarden</span>
+  <span>Built with curiosity & HTML · <a href="https://bhavyalakhwan.github.io/project/">Portfolio</a></span>
+</footer>
+
+<script>
+  let answered = false;
+  function checkAnswer(btn, correct) {
+    if (answered) return;
+    answered = true;
+    const result = document.getElementById('quiz-result');
+    if (correct) {
+      btn.classList.add('correct');
+      result.textContent = '✓ Correct! The axon carries the electrical impulse away from the cell body toward the next neuron or muscle.';
+      result.style.color = 'var(--sprout)';
+    } else {
+      btn.classList.add('wrong');
+      result.textContent = '✗ Not quite. The axon transmits signals away from the cell body — dendrites receive incoming signals.';
+      result.style.color = '#e07070';
+    }
+  }
+</script>
+</body>
+</html>
