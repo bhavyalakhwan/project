@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Neuron Nursery — NeuroGarden</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:     #020f12;
+    --abyss:    #041a1f;
+    --teal-dk:  #063a42;
+    --teal:     #0a5c6b;
+    --glow:     #0dd9c4;
+    --glow-soft:#4ef5e3;
+    --glow-dim: rgba(13,217,196,0.15);
+    --petal:    #e0faf8;
+    --sky:      #9ee8e0;
+    --mist:     #f0fffe;
+    --accent:   #57f5c8;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--petal);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── CANVAS BACKGROUND ── */
+  #bio-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(2,15,18,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(13,217,196,0.12);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--glow-soft);
+    text-decoration: none;
+  }
+  .nav-logo span { font-style: italic; color: var(--glow); }
+  .nav-back {
+    font-size: 0.85rem;
+    color: var(--sky);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--glow); }
+
+  /* ── MAIN WRAPPER ── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 7rem 2rem 5rem;
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    font-size: 0.78rem;
+    color: var(--teal);
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .breadcrumb a { color: var(--teal); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--glow); }
+
+  /* ── HERO ── */
+  .page-hero {
+    margin-bottom: 4rem;
+  }
+  .week-tag {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--glow);
+    border: 1px solid rgba(13,217,196,0.3);
+    border-radius: 20px;
+    padding: 0.25rem 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--mist);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  h1 em { font-style: italic; color: var(--glow-soft); }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--sky);
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--glow), transparent);
+    margin: 2.5rem 0;
+    border-radius: 2px;
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .info-block {
+    background: rgba(4,26,31,0.7);
+    border: 1px solid rgba(13,217,196,0.12);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 1.8rem 2rem;
+    margin-bottom: 1.4rem;
+    backdrop-filter: blur(8px);
+    transition: border-left-color 0.3s, transform 0.25s, box-shadow 0.3s;
+    animation: fadeUp 0.5s ease both;
+  }
+  .info-block:nth-child(1) { animation-delay: 0.05s; }
+  .info-block:nth-child(2) { animation-delay: 0.15s; }
+  .info-block:nth-child(3) { animation-delay: 0.25s; }
+  .info-block:nth-child(4) { animation-delay: 0.35s; }
+  .info-block:nth-child(5) { animation-delay: 0.45s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .info-block:hover {
+    border-left-color: var(--glow);
+    transform: translateX(5px);
+    box-shadow: 0 0 24px rgba(13,217,196,0.07);
+  }
+
+  .info-block h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--glow-soft);
+    margin-bottom: 0.7rem;
+  }
+  .info-block p {
+    font-size: 0.92rem;
+    color: var(--sky);
+    line-height: 1.8;
+  }
+  .info-block p + p { margin-top: 0.8rem; }
+
+  strong.hl { color: var(--glow-soft); font-weight: 500; }
+
+  /* ── PARTS VISUAL ── */
+  .parts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+  .part-card {
+    background: rgba(6,58,66,0.5);
+    border: 1px solid rgba(13,217,196,0.15);
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .part-card:hover {
+    background: rgba(6,58,66,0.8);
+    box-shadow: 0 0 16px rgba(13,217,196,0.1);
+  }
+  .part-card .part-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+  .part-card h4 { font-family: var(--font-display); font-size: 0.95rem; color: var(--mist); margin-bottom: 0.3rem; }
+  .part-card p { font-size: 0.76rem; color: var(--sky); line-height: 1.5; }
+
+  /* ── FACT BOX ── */
+  .fact-box {
+    background: linear-gradient(135deg, rgba(6,58,66,0.9), rgba(4,26,31,0.95));
+    border: 1px solid rgba(13,217,196,0.22);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 1.4rem;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s 0.5s ease both;
+  }
+  .fact-box::after {
+    content: '';
+    position: absolute;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(13,217,196,0.12) 0%, transparent 70%);
+    right: -30px; bottom: -30px;
+  }
+  .fact-box blockquote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--glow-soft);
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+  .fact-box cite {
+    font-size: 0.75rem;
+    color: var(--teal);
+    font-style: normal;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── AI CONNECTION ── */
+  .ai-box {
+    background: rgba(4,26,31,0.8);
+    border: 1px solid rgba(13,217,196,0.2);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 1.4rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    animation: fadeUp 0.5s 0.55s ease both;
+  }
+  .ai-icon { font-size: 2.5rem; flex-shrink: 0; }
+  .ai-box h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--glow-soft); margin-bottom: 0.5rem; }
+  .ai-box p { font-size: 0.88rem; color: var(--sky); line-height: 1.75; }
+
+  /* ── BOTTOM NAV ── */
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.5s 0.6s ease both;
+  }
+  .btn-ghost {
+    display: inline-block;
+    border: 1px solid rgba(13,217,196,0.3);
+    color: var(--glow);
+    text-decoration: none;
+    padding: 0.75rem 1.8rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--glow); background: rgba(13,217,196,0.07); }
+  .btn-primary {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--mist);
+    text-decoration: none;
+    padding: 0.75rem 1.8rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--glow);
+    color: var(--deep);
+    box-shadow: 0 0 20px rgba(13,217,196,0.3);
+  }
+
+  /* ── QUIZ ── */
+  .quiz-section { margin-top: 3rem; animation: fadeUp 0.5s 0.65s ease both; }
+  .quiz-section h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--mist);
+    margin-bottom: 0.4rem;
+  }
+  .quiz-section .sub { font-size: 0.82rem; color: var(--sky); margin-bottom: 1.5rem; }
+  .quiz-card {
+    background: rgba(4,26,31,0.8);
+    border: 1px solid rgba(13,217,196,0.15);
+    border-radius: 10px;
+    padding: 2rem;
+  }
+  .quiz-q { font-family: var(--font-display); font-size: 1.05rem; color: var(--mist); margin-bottom: 1.2rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.7rem; }
+  .quiz-opt {
+    background: rgba(6,58,66,0.4);
+    border: 1px solid rgba(13,217,196,0.15);
+    border-radius: 6px;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.87rem;
+    color: var(--petal);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: var(--font-body);
+  }
+  .quiz-opt:hover { border-color: var(--glow); background: rgba(13,217,196,0.08); }
+  .quiz-opt.correct { border-color: var(--glow); background: rgba(13,217,196,0.15); color: var(--glow-soft); }
+  .quiz-opt.wrong   { border-color: #e05555; background: rgba(224,85,85,0.1); }
+  #result { margin-top: 1rem; font-size: 0.85rem; min-height: 1rem; }
+
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    color: var(--teal);
+    border-top: 1px solid rgba(13,217,196,0.08);
+  }
+  footer a { color: var(--teal); text-decoration: none; }
+  footer a:hover { color: var(--glow); }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    main { padding: 6rem 1.2rem 4rem; }
+    .parts-grid { grid-template-columns: 1fr; }
+    .ai-box { flex-direction: column; gap: 0.8rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Animated canvas background -->
+<canvas id="bio-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="neurogarden.html">Neuro<span>Garden</span></a>
+  <a class="nav-back" href="neurogarden.html">← Back to Garden</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="neurogarden.html">Home</a>
+    <span>›</span>
+    <a href="neurogarden.html#garden">Garden</a>
+    <span>›</span>
+    <span style="color:var(--glow-soft)">Neuron Nursery</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <span class="week-tag">Week 1 · Neuron Nursery</span>
+    <h1>The <em>Neuron</em></h1>
+    <p class="hero-desc">The basic building block of everything you think, feel, and do. 86 billion of them are firing inside your skull right now.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Content -->
+  <div class="info-block">
+    <h2>What is a Neuron?</h2>
+    <p>A neuron is a specialised cell in the nervous system whose entire job is communication. Unlike most cells in your body, neurons are built to send and receive messages — electrical and chemical signals that travel at incredible speeds.</p>
+    <p>Your brain contains roughly <strong class="hl">86 billion neurons</strong>, and they never work alone. Every thought you have is the result of millions of neurons firing together in coordinated patterns.</p>
+  </div>
+
+  <div class="info-block">
+    <h2>The Three Main Parts</h2>
+    <p>Every neuron has the same core structure — three parts that work together to receive, process, and send information.</p>
+    <div class="parts-grid">
+      <div class="part-card">
+        <span class="part-icon">🌿</span>
+        <h4>Dendrites</h4>
+        <p>Branch-like extensions that receive incoming signals from other neurons.</p>
+      </div>
+      <div class="part-card">
+        <span class="part-icon">🔵</span>
+        <h4>Cell Body</h4>
+        <p>The core of the neuron. Processes all incoming signals and keeps the cell alive.</p>
+      </div>
+      <div class="part-card">
+        <span class="part-icon">⚡</span>
+        <h4>Axon</h4>
+        <p>A long tail that carries the electrical signal away toward the next neuron.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-block">
+    <h2>How Does it Fire?</h2>
+    <p>When a neuron receives enough signals through its dendrites, it generates an electrical impulse called an <strong class="hl">action potential</strong>. This charge travels down the axon at speeds of up to <strong class="hl">120 metres per second</strong>.</p>
+    <p>At the end of the axon, the electrical signal is converted into a chemical message — neurotransmitters are released into the gap between neurons, called the synapse. The next neuron picks them up and the signal continues. This is how a single thought travels across your entire brain in milliseconds.</p>
+  </div>
+
+  <!-- Fact box -->
+  <div class="fact-box">
+    <blockquote>"A single neuron can form up to 10,000 connections with other neurons — your brain has an estimated 100 trillion synaptic connections total."</blockquote>
+    <cite>— NeuroGarden · Week 1 Fact</cite>
+  </div>
+
+  <!-- AI Connection -->
+  <div class="ai-box">
+    <div class="ai-icon">🤖</div>
+    <div>
+      <h3>The AI Connection</h3>
+      <p>Artificial neural networks — the technology behind modern AI like ChatGPT — were directly modelled after biological neurons. Each artificial "neuron" receives numerical inputs, processes them, and passes a signal forward, just like the real thing. The deeper you understand biological neurons, the better you'll understand why AI works the way it does.</p>
+    </div>
+  </div>
+
+  <!-- Quiz -->
+  <div class="quiz-section">
+    <h3>Quick Check 🌱</h3>
+    <p class="sub">One question to see if the concept has taken root.</p>
+    <div class="quiz-card">
+      <div class="quiz-q">What is the primary function of a neuron's axon?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="check(this, false)">Receive incoming signals from other neurons</button>
+        <button class="quiz-opt" onclick="check(this, true)">Transmit electrical signals away from the cell body</button>
+        <button class="quiz-opt" onclick="check(this, false)">Produce energy for the neuron</button>
+        <button class="quiz-opt" onclick="check(this, false)">Store neurotransmitters for long-term memory</button>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="page-nav">
+    <a href="neurogarden.html#garden" class="btn-ghost">← Back to Garden</a>
+    <a href="neurogarden.html#brainbytes" class="btn-primary">Week 2: Synapses →</a>
+  </div>
+
+</main>
+
+<footer>
+  <a href="neurogarden.html">NeuroGarden</a> · © 2026 Bhavya Lakhwan ·
+  <a href="https://bhavyalakhwan.github.io/project/">Portfolio</a>
+</footer>
+
+<script>
+  /* ── BIOLUMINESCENT PARTICLE CANVAS ── */
+  const canvas = document.getElementById('bio-canvas');
+  const ctx = canvas.getContext('2d');
+
+  let W, H, particles = [], nodes = [], connections = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Glowing particles
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 2.5 + 0.5,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.5 + 0.1,
+      pulse: Math.random() * Math.PI * 2
+    });
+  }
+
+  // Neuron-like nodes
+  for (let i = 0; i < 12; i++) {
+    nodes.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 4 + 3,
+      dx: (Math.random() - 0.5) * 0.15,
+      dy: (Math.random() - 0.5) * 0.15,
+      alpha: Math.random() * 0.4 + 0.2,
+      pulse: Math.random() * Math.PI * 2
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Background gradient
+    const bg = ctx.createRadialGradient(W * 0.3, H * 0.3, 0, W * 0.3, H * 0.3, W * 0.8);
+    bg.addColorStop(0, 'rgba(4,30,36,0.95)');
+    bg.addColorStop(1, 'rgba(2,15,18,0.98)');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    const t = Date.now() * 0.001;
+
+    // Draw connections between nearby nodes
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 220) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          const alpha = (1 - dist / 220) * 0.12;
+          ctx.strokeStyle = `rgba(13,217,196,${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    nodes.forEach(n => {
+      n.pulse += 0.02;
+      const pulsed = n.r + Math.sin(n.pulse) * 1.5;
+      const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pulsed * 4);
+      grd.addColorStop(0, `rgba(13,217,196,${n.alpha})`);
+      grd.addColorStop(1, 'rgba(13,217,196,0)');
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, pulsed * 4, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, pulsed, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(78,245,227,${n.alpha * 0.9})`;
+      ctx.fill();
+
+      n.x += n.dx; n.y += n.dy;
+      if (n.x < 0 || n.x > W) n.dx *= -1;
+      if (n.y < 0 || n.y > H) n.dy *= -1;
+    });
+
+    // Draw small particles
+    particles.forEach(p => {
+      p.pulse += 0.03;
+      const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(13,217,196,${a})`;
+      ctx.fill();
+
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > W) p.dx *= -1;
+      if (p.y < 0 || p.y > H) p.dy *= -1;
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* ── QUIZ ── */
+  let answered = false;
+  function check(btn, correct) {
+    if (answered) return;
+    answered = true;
+    const result = document.getElementById('result');
+    if (correct) {
+      btn.classList.add('correct');
+      result.innerHTML = '<span style="color:#4ef5e3">✓ Correct!</span> The axon carries the electrical impulse away from the cell body toward the synapse.';
+    } else {
+      btn.classList.add('wrong');
+      result.innerHTML = '<span style="color:#e07070">✗ Not quite.</span> The axon transmits signals away — dendrites are what receive incoming signals.';
+    }
+  }
+</script>
+</body>
+</html>
